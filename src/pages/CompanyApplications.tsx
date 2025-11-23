@@ -62,7 +62,7 @@ export function CompanyApplications() {
                     {application.studentName}
                   </Link>
                   <p className="text-gray-600 text-sm sm:text-base">
-                    {application.course} - {application.semester} Semestre
+                    {application.course && `${application.course} - `}{application.semester && `${application.semester} Semestre`}
                   </p>
                   <p className="text-sm text-gray-500">
                     {application.university}

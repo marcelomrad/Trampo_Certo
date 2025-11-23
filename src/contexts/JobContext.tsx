@@ -22,6 +22,7 @@ interface Student {
   course?: string;
   semester?: string;
   bio?: string;
+  resumeUrl?: string;
 }
 
 interface JobContextType {
@@ -36,6 +37,7 @@ interface JobContextType {
   hasApplied: (jobId: string, studentId: string) => boolean;
   getStudentById: (id: string) => Student | undefined;
   updateApplicationStatus: (id: string, status: 'pending' | 'approved' | 'rejected') => void;
+  cancelApplication: (id: string) => void;
 }
 
 const JobContext = createContext<JobContextType | undefined>(undefined);
@@ -117,7 +119,8 @@ const initialStudents: Student[] = [
     university: 'USP',
     course: 'Ciência da Computação',
     semester: '5º',
-    bio: 'Estudante apaixonada por desenvolvimento web e inteligência artificial.'
+    bio: 'Estudante apaixonada por desenvolvimento web e inteligência artificial.',
+    resumeUrl: 'https://example.com/resume-ana.pdf'
   },
   {
     id: 'student2',
@@ -126,7 +129,8 @@ const initialStudents: Student[] = [
     university: 'UNICAMP',
     course: 'Sistemas de Informação',
     semester: '6º',
-    bio: 'Interessado em desenvolvimento de software e análise de dados.'
+    bio: 'Interessado em desenvolvimento de software e análise de dados.',
+    resumeUrl: 'https://example.com/resume-lucas.pdf'
   },
   {
     id: 'student3',
@@ -135,7 +139,8 @@ const initialStudents: Student[] = [
     university: 'UFRJ',
     course: 'Engenharia de Software',
     semester: '4º',
-    bio: 'Focado em engenharia de software e metodologias ágeis.'
+    bio: 'Focado em engenharia de software e metodologias ágeis.',
+    resumeUrl: 'https://example.com/resume-carlos.pdf'
   },
   {
     id: 'student4',
@@ -144,7 +149,8 @@ const initialStudents: Student[] = [
     university: 'UFMG',
     course: 'Biologia',
     semester: '3º',
-    bio: 'Entusiasta da pesquisa em microbiologia e biotecnologia.'
+    bio: 'Entusiasta da pesquisa em microbiologia e biotecnologia.',
+    resumeUrl: 'https://example.com/resume-mariana.pdf'
   },
   {
     id: 'student5',
@@ -153,7 +159,8 @@ const initialStudents: Student[] = [
     university: 'PUC-MG',
     course: 'Marketing',
     semester: '7º',
-    bio: 'Criativo e apaixonado por marketing digital e branding.'
+    bio: 'Criativo e apaixonado por marketing digital e branding.',
+    resumeUrl: 'https://example.com/resume-pedro.pdf'
   }
 ];
 
@@ -293,6 +300,10 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
     setApplications(prev => prev.map(app => app.id === id ? { ...app, status } : app));
   };
 
+  const cancelApplication = (id: string) => {
+    setApplications(prev => prev.filter(app => app.id !== id));
+  };
+
   return (
     <JobContext.Provider
       value={{
@@ -307,6 +318,7 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
         hasApplied,
         getStudentById,
         updateApplicationStatus,
+        cancelApplication,
       }}
     >
       {children}

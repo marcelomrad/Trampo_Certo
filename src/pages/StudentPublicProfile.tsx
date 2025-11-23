@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeftIcon, MailIcon, GraduationCapIcon, BookOpenIcon, CalendarIcon } from 'lucide-react';
+import { ArrowLeftIcon, MailIcon, GraduationCapIcon, BookOpenIcon, CalendarIcon, FileTextIcon } from 'lucide-react';
 import { useJobs } from '../contexts/JobContext';
 
 export function StudentPublicProfile() {
@@ -95,7 +95,19 @@ export function StudentPublicProfile() {
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* Resume */}
+            {student.resumeUrl && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Currículo</h2>
+                <div className="flex items-center space-x-3">
+                  <FileTextIcon className="w-5 h-5 text-gray-400" />
+                  <a href={student.resumeUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium">
+                    Visualizar Currículo (PDF)
+                  </a>
+                </div>
+              </div>
+            )}          </div>
         </div>
       </div>
     </div>

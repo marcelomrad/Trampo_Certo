@@ -68,9 +68,9 @@ export function JobDetail() {
   };
   return <div className="w-full bg-gray-50 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link to="/vagas" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
+        <Link to={user?.type === 'company' ? '/empresa/dashboard' : '/vagas'} className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
           <ArrowLeftIcon className="w-4 h-4 mr-2" />
-          Voltar para busca
+          {user?.type === 'company' ? 'Voltar ao dashboard' : 'Voltar para busca'}
         </Link>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           {/* Header */}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileTextIcon, ClockIcon, CheckCircleIcon, XCircleIcon, EyeIcon } from 'lucide-react';
+import { FileTextIcon, ClockIcon, CheckCircleIcon, XCircleIcon, EyeIcon, XIcon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useJobs } from '../contexts/JobContext';
 export function StudentApplications() {
   const { user } = useAuth();
-  const { getApplicationsByStudent, getJobById } = useJobs();
+  const { getApplicationsByStudent, getJobById, cancelApplication } = useJobs();
   
   const studentApplications = user ? getApplicationsByStudent(user.id) : [];
   
@@ -86,14 +86,22 @@ export function StudentApplications() {
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                   <p className="text-sm text-gray-600">
                     Candidatura enviada em {application.appliedDate}
                   </p>
-                  <Link to={`/vaga/${application.jobId}`} className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium">
-                    <EyeIcon className="w-4 h-4" />
-                    <span>Ver vaga</span>
-                  </Link>
+                  <div className="flex space-x-4">
+                    <Link to={`/vaga/${application.jobId}`} className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium">
+                      <EyeIcon className="w-4 h-4" />
+                      <span>Ver vaga</span>
+                    </Link>
+                    {application.status === 'pending' && (
+                      <button onClick={() => cancelApplication(application.id)} className="flex items-center space-x-2 text-red-600 hover:text-red-700 font-medium">
+                        <XIcon className="w-4 h-4" />
+                        <span>Cancelar</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>)}
           </div>}
