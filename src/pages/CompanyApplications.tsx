@@ -6,7 +6,7 @@ export function CompanyApplications() {
   const {
     jobId
   } = useParams();
-  const { getApplicationsByJob, getJobById } = useJobs();
+  const { getApplicationsByJob, getJobById, updateApplicationStatus } = useJobs();
   const [filter, setFilter] = useState('all');
   
   const job = getJobById(jobId || '');
@@ -15,8 +15,9 @@ export function CompanyApplications() {
     if (filter === 'all') return true;
     return app.status === filter;
   });
-  const updateStatus = (id: string, status: string) => {
-    alert(`Candidatura ${status === 'approved' ? 'aprovada' : 'rejeitada'}`);
+  const updateStatus = (id: string, status: 'approved' | 'rejected') => {
+    updateApplicationStatus(id, status);
+    setFilter(status);
   };
   return <div className="w-full bg-gray-50 min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
@@ -57,9 +58,9 @@ export function CompanyApplications() {
           {filteredApplications.map(application => <div key={application.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  <Link to={`/estudante/${application.studentId}`} className="text-lg font-semibold text-blue-600 hover:text-blue-700 mb-1">
                     {application.studentName}
-                  </h3>
+                  </Link>
                   <p className="text-gray-600 text-sm sm:text-base">
                     {application.course} - {application.semester} Semestre
                   </p>

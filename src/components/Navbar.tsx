@@ -26,9 +26,11 @@ export function Navbar() {
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link to="/vagas" className="text-gray-700 hover:text-blue-600 font-medium">
-              Buscar Vagas
-            </Link>
+            {(!isAuthenticated || user?.type === 'student') && (
+              <Link to="/vagas" className="text-gray-700 hover:text-blue-600 font-medium">
+                Buscar Vagas
+              </Link>
+            )}
             {isAuthenticated ? <>
                 {user?.type === 'student' && <>
                     <Link to="/minhas-candidaturas" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600">
@@ -51,9 +53,6 @@ export function Navbar() {
                     </Link>
                   </>}
                 <div className="flex items-center space-x-4">
-                  <span className="text-gray-700 font-medium">
-                    {user?.name}
-                  </span>
                   <button onClick={handleLogout} className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-red-600">
                     <LogOutIcon className="w-5 h-5" />
                     <span className="font-medium">Sair</span>
@@ -81,9 +80,11 @@ export function Navbar() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && <div className="lg:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              <Link to="/vagas" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 hover:text-blue-600 font-medium py-2">
-                Buscar Vagas
-              </Link>
+              {(!isAuthenticated || user?.type === 'student') && (
+                <Link to="/vagas" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 hover:text-blue-600 font-medium py-2">
+                  Buscar Vagas
+                </Link>
+              )}
               {isAuthenticated ? <>
                   {user?.type === 'student' && <>
                       <Link to="/minhas-candidaturas" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">

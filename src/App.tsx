@@ -16,6 +16,7 @@ import { JobPreview } from './pages/JobPreview';
 import { CompanyApplications } from './pages/CompanyApplications';
 import { StudentProfile } from './pages/StudentProfile';
 import { CompanyProfile } from './pages/CompanyProfile';
+import { StudentPublicProfile } from './pages/StudentPublicProfile';
 export function App() {
   return <BrowserRouter>
       <AuthProvider>
@@ -31,6 +32,7 @@ export function App() {
               <Route path="/cadastro/empresa" element={<CompanyRegister />} />
               <Route path="/minhas-candidaturas" element={<StudentApplications />} />
               <Route path="/perfil" element={<StudentProfile />} />
+              <Route path="/estudante/:studentId" element={<StudentPublicProfile />} />
               <Route path="/empresa/dashboard" element={<CompanyDashboard />} />
               <Route path="/empresa/perfil" element={<CompanyProfile />} />
               <Route path="/empresa/postar-vaga" element={<PostJob />} />

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SearchIcon, TrendingUpIcon, UsersIcon, HeartIcon } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 export function Home() {
+  const { isAuthenticated, user } = useAuth();
   return <div className="w-full">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
@@ -15,10 +17,12 @@ export function Home() {
               e inclusão. Conectamos estudantes com empresas que valorizam a
               diversidade.
             </p>
-            <Link to="/vagas" className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
-              <SearchIcon className="w-5 h-5 mr-2" />
-              Buscar Vagas Agora
-            </Link>
+            {(!isAuthenticated || user?.type === 'student') && (
+              <Link to="/vagas" className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                <SearchIcon className="w-5 h-5 mr-2" />
+                Buscar Vagas Agora
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -79,14 +83,16 @@ export function Home() {
               Junte-se a centenas de estudantes que já encontraram estágios
               flexíveis e inclusivos.
             </p>
-            <div className="flex justify-center space-x-4">
-              <Link to="/vagas" className="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Sou Estudante
-              </Link>
-              <button className="px-8 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors border-2 border-white">
-                Sou Empresa
-              </button>
-            </div>
+            {!isAuthenticated && (
+              <div className="flex justify-center space-x-4">
+                <Link to="/vagas" className="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                  Sou Estudante
+                </Link>
+                <button className="px-8 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors border-2 border-white">
+                  Sou Empresa
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
