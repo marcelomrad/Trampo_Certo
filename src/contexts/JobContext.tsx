@@ -30,6 +30,7 @@ interface JobContextType {
   applications: Application[];
   students: Student[];
   addJob: (job: Omit<Job, 'id' | 'postedDate'>) => void;
+  updateJob: (id: string, job: Omit<Job, 'id' | 'postedDate'>) => void;
   applyToJob: (jobId: string, studentData: { id: string; name: string; email: string }) => boolean;
   getJobById: (id: string) => Job | undefined;
   getApplicationsByJob: (jobId: string) => Application[];
@@ -256,6 +257,14 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
     setJobs((prev) => [newJob, ...prev]);
   };
 
+  const updateJob = (id: string, jobData: Omit<Job, 'id' | 'postedDate'>) => {
+    setJobs((prev) => prev.map(job => 
+      job.id === id 
+        ? { ...jobData, id, postedDate: job.postedDate }
+        : job
+    ));
+  };
+
   const applyToJob = (jobId: string, studentData: { id: string; name: string; email: string }) => {
     // Verificar se já se candidatou
     if (hasApplied(jobId, studentData.id)) {
@@ -311,6 +320,7 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
         applications,
         students,
         addJob,
+        updateJob,
         applyToJob,
         getJobById,
         getApplicationsByJob,

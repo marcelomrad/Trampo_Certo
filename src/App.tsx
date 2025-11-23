@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { JobProvider } from './contexts/JobContext';
@@ -17,6 +16,7 @@ import { CompanyApplications } from './pages/CompanyApplications';
 import { StudentProfile } from './pages/StudentProfile';
 import { CompanyProfile } from './pages/CompanyProfile';
 import { StudentPublicProfile } from './pages/StudentPublicProfile';
+import { EditJob } from './pages/EditJob';
 export function App() {
   return <BrowserRouter>
       <AuthProvider>
@@ -36,6 +36,7 @@ export function App() {
               <Route path="/empresa/dashboard" element={<CompanyDashboard />} />
               <Route path="/empresa/perfil" element={<CompanyProfile />} />
               <Route path="/empresa/postar-vaga" element={<PostJob />} />
+              <Route path="/empresa/editar-vaga/:id" element={<EditJob />} />
               <Route path="/empresa/preview-vaga" element={<JobPreview />} />
               <Route path="/empresa/candidatos/:jobId" element={<CompanyApplications />} />
             </Routes>

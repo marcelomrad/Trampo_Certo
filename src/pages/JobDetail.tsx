@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MapPinIcon, ClockIcon, BriefcaseIcon, CalendarIcon, CheckCircleIcon, ArrowLeftIcon } from 'lucide-react';
 import { FlexScore } from '../components/FlexScore';
@@ -72,6 +72,16 @@ export function JobDetail() {
           <ArrowLeftIcon className="w-4 h-4 mr-2" />
           {user?.type === 'company' ? 'Voltar ao dashboard' : 'Voltar para busca'}
         </Link>
+        {user?.type === 'company' && (
+          <div className="mb-6">
+            <button
+              onClick={() => navigate(`/empresa/editar-vaga/${id}`)}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
+            >
+              Editar Vaga
+            </button>
+          </div>
+        )}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           {/* Header */}
           <div className="p-8 border-b border-gray-200">
@@ -198,24 +208,26 @@ export function JobDetail() {
             </div>
           </div>
           {/* Apply Section */}
-          <div className="p-8 bg-gray-50">
-            {hasApplied ? <div className="text-center py-4">
-                <CheckCircleIcon className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <p className="text-lg font-semibold text-gray-900 mb-2">
-                  Candidatura Enviada!
-                </p>
-                <p className="text-gray-600">
-                  Você receberá atualizações sobre sua candidatura por email.
-                </p>
-              </div> : <>
-                <button onClick={handleApply} className="w-full py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
-                  Candidatar-se a esta Vaga
-                </button>
-                <p className="text-center text-sm text-gray-600 mt-4">
-                  {!isAuthenticated ? 'Você precisa estar logado para se candidatar' : 'Ao se candidatar, você concorda com nossos termos de uso'}
-                </p>
-              </>}
-          </div>
+          {user?.type !== 'company' && (
+            <div className="p-8 bg-gray-50">
+              {hasApplied ? <div className="text-center py-4">
+                  <CheckCircleIcon className="w-12 h-12 text-green-600 mx-auto mb-3" />
+                  <p className="text-lg font-semibold text-gray-900 mb-2">
+                    Candidatura Enviada!
+                  </p>
+                  <p className="text-gray-600">
+                    Você receberá atualizações sobre sua candidatura por email.
+                  </p>
+                </div> : <>
+                  <button onClick={handleApply} className="w-full py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+                    Candidatar-se a esta Vaga
+                  </button>
+                  <p className="text-center text-sm text-gray-600 mt-4">
+                    {!isAuthenticated ? 'Você precisa estar logado para se candidatar' : 'Ao se candidatar, você concorda com nossos termos de uso'}
+                  </p>
+                </>}
+            </div>
+          )}
         </div>
       </div>
     </div>;
